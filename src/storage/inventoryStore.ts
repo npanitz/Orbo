@@ -44,10 +44,14 @@ class LocalStorageInventory implements InventoryStore {
   }
 
   add(name: string, smiles: string): CustomEntry {
+    const trimmed = smiles.trim();
+    if (this.list().some((e) => e.smiles === trimmed)) {
+      throw new Error("That SMILES is already in your library.");
+    }
     const entry: CustomEntry = {
       id: `custom_${Date.now().toString(36)}_${Math.random().toString(36).slice(2, 8)}`,
-      name: name.trim() || smiles,
-      smiles: smiles.trim(),
+      name: name.trim() || trimmed,
+      smiles: trimmed,
       createdAt: Date.now(),
     };
     const next = [...this.list(), entry];

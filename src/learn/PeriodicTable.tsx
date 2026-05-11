@@ -30,43 +30,58 @@ export function PeriodicTable({ onExit }: Props) {
         </p>
       </header>
 
-      <div className="periodic-table">
-        {ELEMENTS_DATA.map((el) => {
-          const key = categoryKey(el.category);
-          const color = CATEGORY_COLORS[key];
-          return (
-            <button
-              key={el.number}
-              className="pt-cell"
-              style={{
-                gridColumn: el.xpos,
-                gridRow: el.ypos,
-                ["--accent" as string]: color,
-              }}
-              onClick={() => setSelected(el)}
-              title={`${el.name} · ${el.category}`}
-            >
-              <div className="pt-num">{el.number}</div>
-              <div className="pt-sym">{el.symbol}</div>
-              <div className="pt-mass">{formatMass(el.atomic_mass)}</div>
-            </button>
-          );
-        })}
-
-        {/* Visual placeholder cells linking main table to f-block strip */}
-        <div className="pt-placeholder" style={{ gridColumn: 3, gridRow: 6 }}>
-          57–71
-        </div>
-        <div className="pt-placeholder" style={{ gridColumn: 3, gridRow: 7 }}>
-          89–103
-        </div>
-      </div>
-
+      <PeriodicTableGrid onPick={setSelected} />
       <Legend />
 
       {selected && (
         <ElementDetail element={selected} onClose={() => setSelected(null)} />
       )}
+    </div>
+  );
+}
+
+interface GridProps {
+  onPick?: (el: PeriodicElement) => void;
+  /** Atomic number to visually highlight (pulses). */
+  highlightedZ?: number;
+  /** Disable click interactions — useful in passive lesson view. */
+  passive?: boolean;
+}
+
+/** The element grid itself, no page chrome. Reusable in lessons. */
+export function PeriodicTableGrid({ onPick, highlightedZ, passive }: GridProps) {
+  return (
+    <div className="periodic-table">
+      {ELEMENTS_DATA.map((el) => {
+        const key = categoryKey(el.category);
+        const color = CATEGORY_COLORS[key];
+        const isHighlighted = highlightedZ === el.number;
+        return (
+          <button
+            key={el.number}
+            className={"pt-cell" + (isHighlighted ? " pt-cell-pulse" : "")}
+            style={{
+              gridColumn: el.xpos,
+              gridRow: el.ypos,
+              ["--accent" as string]: color,
+            }}
+            onClick={() => !passive && onPick?.(el)}
+            tabIndex={passive ? -1 : 0}
+            title={`${el.name} · ${el.category}`}
+          >
+            <div className="pt-num">{el.number}</div>
+            <div className="pt-sym">{el.symbol}</div>
+            <div className="pt-mass">{formatMass(el.atomic_mass)}</div>
+          </button>
+        );
+      })}
+
+      <div className="pt-placeholder" style={{ gridColumn: 3, gridRow: 6 }}>
+        57–71
+      </div>
+      <div className="pt-placeholder" style={{ gridColumn: 3, gridRow: 7 }}>
+        89–103
+      </div>
     </div>
   );
 }
@@ -77,7 +92,7 @@ function formatMass(m: number): string {
   return m.toFixed(2);
 }
 
-function Legend() {
+export function Legend() {
   const keys: CategoryKey[] = [
     "alkali-metal",
     "alkaline-earth-metal",

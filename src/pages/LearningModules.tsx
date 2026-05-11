@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { PeriodicTable } from "../learn/PeriodicTable";
+import { AtomicStructureModule } from "../learn/modules/AtomicStructureModule";
 
 interface Props {
   onExit: () => void;
@@ -7,7 +7,7 @@ interface Props {
 
 type Track =
   | "index"
-  | "periodic-table";
+  | "atomic-structure";
 
 interface TrackDef {
   id: Track;
@@ -18,10 +18,10 @@ interface TrackDef {
 
 const TRACKS: TrackDef[] = [
   {
-    id: "periodic-table",
+    id: "atomic-structure",
     title: "Atomic Structure & the Periodic Table",
     blurb:
-      "Meet the elements. Explore the periodic table and learn how an atom's structure determines where it lives on the chart.",
+      "Meet the elements. Build atoms from scratch and learn how their structure determines where they live on the chart.",
     status: "available",
   },
 ];
@@ -48,8 +48,8 @@ const SOON: { title: string; blurb: string }[] = [
 export function LearningModules({ onExit }: Props) {
   const [track, setTrack] = useState<Track>("index");
 
-  if (track === "periodic-table") {
-    return <PeriodicTable onExit={() => setTrack("index")} />;
+  if (track === "atomic-structure") {
+    return <AtomicStructureModule onExit={() => setTrack("index")} />;
   }
 
   return (

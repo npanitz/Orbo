@@ -1,5 +1,10 @@
 import { useEffect, useRef, useState, useSyncExternalStore } from "react";
-import { getAllRecipes, getRecipeOrder, isCustomRecipe } from "../chem/molecules";
+import {
+  SMILES_LIBRARY,
+  getAllRecipes,
+  getRecipeOrder,
+  isCustomRecipe,
+} from "../chem/molecules";
 import { recipeFormula } from "../chem/builder";
 import { smilesToRecipe } from "../chem/smiles";
 import { previewRegistry } from "../render/previewRegistry";
@@ -84,6 +89,14 @@ function AddMoleculeBar() {
       setError("SMILES is required.");
       return;
     }
+    // Reject if it matches a built-in entry by SMILES
+    const builtinMatch = Object.entries(SMILES_LIBRARY).find(
+      ([, s]) => s === smi,
+    );
+    if (builtinMatch) {
+      setError(`Already in the built-in library as "${builtinMatch[0]}".`);
+      return;
+    }
     try {
       // Validate by parsing — same path the renderer will use later.
       smilesToRecipe(smi, name.trim() || smi);
@@ -91,7 +104,12 @@ function AddMoleculeBar() {
       setError(e instanceof Error ? e.message : "Could not parse SMILES.");
       return;
     }
-    inventoryStore.add(name, smi);
+    try {
+      inventoryStore.add(name, smi);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : "Could not save.");
+      return;
+    }
     setSmiles("");
     setName("");
   };
