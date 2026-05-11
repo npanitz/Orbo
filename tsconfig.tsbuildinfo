@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/chem/atom.ts","./src/chem/elements.ts","./src/chem/molecules.ts","./src/chem/solver.ts","./src/game/game.ts","./src/render/scenesetup.ts","./src/ui/inventorypanel.tsx","./src/ui/statusbar.tsx","./src/ui/toolbar.tsx"],"version":"5.9.3"}
