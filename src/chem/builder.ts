@@ -1,7 +1,7 @@
 import { Vector3 } from "three";
 import { Atom } from "./atom";
 import { ELEMENTS, formulaFor } from "./elements";
-import { RECIPES } from "./molecules";
+import { getAllRecipes } from "./molecules";
 
 /**
  * Build a molecule from a recipe key.
@@ -9,7 +9,7 @@ import { RECIPES } from "./molecules";
  * want. Bond order in the recipe matters; earlier bonds anchor the geometry.
  */
 export function buildMolecule(recipeKey: string): Atom[] {
-  const recipe = RECIPES[recipeKey];
+  const recipe = getAllRecipes()[recipeKey];
   if (!recipe) return [];
 
   const atoms = recipe.atoms.map((el, i) => {
@@ -50,7 +50,7 @@ export function moleculeRadius(atoms: Atom[]): number {
 
 /** Pretty formula for a recipe (uses the shared atom-counting prettifier). */
 export function recipeFormula(recipeKey: string): string {
-  const recipe = RECIPES[recipeKey];
+  const recipe = getAllRecipes()[recipeKey];
   if (!recipe) return "";
   return formulaFor(recipe.atoms.map((element) => ({ element })));
 }
