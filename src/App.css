@@ -1080,6 +1080,168 @@ canvas { display: block; }
   font-size: 12px;
   color: rgba(180, 200, 235, 0.65);
 }
+
+/* ---------- Trend explorer (lesson 3) ---------- */
+
+.trend-explorer {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  grid-template-areas:
+    "toggle  narrative"
+    "table   narrative"
+    "action  action";
+  gap: 18px;
+  align-items: start;
+}
+.trend-toggle {
+  grid-area: toggle;
+  display: flex;
+  gap: 8px;
+  background: rgba(15, 18, 32, 0.55);
+  border: 1px solid rgba(115, 153, 255, 0.22);
+  border-radius: 12px;
+  padding: 6px;
+}
+.trend-toggle-button {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: rgba(180, 200, 235, 0.7);
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding: 9px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.12s, color 0.12s;
+}
+.trend-toggle-button:hover { color: #e6f2ff; }
+.trend-toggle-button.active {
+  background: rgba(115, 153, 255, 0.25);
+  color: #e6f2ff;
+}
+.trend-table {
+  grid-area: table;
+  background: rgba(15, 18, 32, 0.4);
+  border: 1px solid rgba(115, 153, 255, 0.18);
+  border-radius: 14px;
+  padding: 14px 14px 10px;
+}
+.trend-table .periodic-table {
+  gap: 3px;
+}
+.trend-table .pt-cell {
+  container-type: inline-size;
+  padding: 2px 3px;
+  /* In the heatmap, the override color IS the fill — not a tint of dark. */
+  background: var(--accent) !important;
+  border-color: rgba(0, 0, 0, 0.25) !important;
+  color: rgba(20, 25, 40, 0.95);
+}
+.trend-table .pt-sym {
+  font-size: clamp(11px, 42cqw, 18px);
+  text-align: center;
+  color: rgba(15, 20, 35, 0.95);
+}
+.trend-table .pt-num {
+  font-size: clamp(7px, 22cqw, 9px);
+  color: rgba(20, 25, 40, 0.7);
+}
+.trend-table .pt-mass { display: none; }
+.trend-table .pt-cell:hover {
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+}
+
+.trend-legend {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  font-size: 11px;
+  color: rgba(180, 200, 235, 0.75);
+}
+.trend-legend-bar {
+  flex: 1;
+  height: 8px;
+  border-radius: 4px;
+  background: linear-gradient(90deg, rgb(60, 110, 200), rgb(255, 130, 80));
+}
+
+.trend-narrative {
+  grid-area: narrative;
+  background: rgba(15, 18, 32, 0.55);
+  border: 1px solid rgba(115, 153, 255, 0.22);
+  border-radius: 14px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.trend-narrative-section {
+  border-left: 2px solid rgba(115, 153, 255, 0.45);
+  padding-left: 14px;
+}
+.trend-narrative-eyebrow {
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #a4b8ff;
+  margin-bottom: 4px;
+}
+.trend-narrative-section p {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: rgba(216, 236, 255, 0.85);
+}
+
+.trend-action {
+  grid-area: action;
+  text-align: center;
+  padding-top: 4px;
+}
+
+/* Heatmap mode also applies to the consult modal — but only when explicitly
+   enabled (so category-palette modal stays untouched). */
+.pt-heatmap .pt-cell {
+  background: var(--accent) !important;
+  border-color: rgba(0, 0, 0, 0.25) !important;
+  color: rgba(15, 20, 35, 0.95);
+}
+.pt-heatmap .pt-sym { color: rgba(15, 20, 35, 0.95); }
+.pt-heatmap .pt-num { color: rgba(20, 25, 40, 0.7); }
+.pt-modal .periodic-table { gap: 3px; }
+
+.pt-modal-toggle {
+  display: flex;
+  gap: 8px;
+  background: rgba(15, 18, 32, 0.55);
+  border: 1px solid rgba(115, 153, 255, 0.22);
+  border-radius: 10px;
+  padding: 5px;
+  margin-bottom: 14px;
+}
+.pt-modal-trend-legend {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  font-size: 11px;
+  color: rgba(180, 200, 235, 0.75);
+}
+
+@media (max-width: 1100px) {
+  .trend-explorer {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "toggle"
+      "narrative"
+      "table"
+      "action";
+  }
+}
 .ui-layer > * { pointer-events: auto; }
 
 .status-bar {

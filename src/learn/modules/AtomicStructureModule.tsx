@@ -2,8 +2,9 @@ import { useState } from "react";
 import { PeriodicTable } from "../PeriodicTable";
 import { BuildAnAtomLesson } from "../lessons/BuildAnAtom/BuildAnAtomLesson";
 import { ShellFillingLesson } from "../lessons/ShellFilling/ShellFillingLesson";
+import { PeriodicTrendsLesson } from "../lessons/PeriodicTrends/PeriodicTrendsLesson";
 
-type View = "hub" | "lesson-build" | "lesson-shells" | "ref-periodic";
+type View = "hub" | "lesson-build" | "lesson-shells" | "lesson-trends" | "ref-periodic";
 
 interface Props {
   onExit: () => void;
@@ -17,6 +18,9 @@ export function AtomicStructureModule({ onExit }: Props) {
   }
   if (view === "lesson-shells") {
     return <ShellFillingLesson onExit={() => setView("hub")} />;
+  }
+  if (view === "lesson-trends") {
+    return <PeriodicTrendsLesson onExit={() => setView("hub")} />;
   }
   if (view === "ref-periodic") {
     return <PeriodicTable onExit={() => setView("hub")} />;
@@ -75,15 +79,18 @@ export function AtomicStructureModule({ onExit }: Props) {
             <div className="track-card-cta">Start →</div>
           </button>
 
-          <div className="track-card disabled">
+          <button
+            className="track-card available"
+            onClick={() => setView("lesson-trends")}
+          >
             <div className="track-card-tag-inline">Lesson 3</div>
             <div className="track-card-title">Periodic Trends</div>
             <div className="track-card-blurb">
-              Atomic radius, electronegativity, ionization energy — and why
-              they march in patterns across the table.
+              Atomic radius, electronegativity, ionization energy — and the
+              one rule underneath all three.
             </div>
-            <div className="track-card-tag">Coming soon</div>
-          </div>
+            <div className="track-card-cta">Start →</div>
+          </button>
         </div>
       </div>
     </div>

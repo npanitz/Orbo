@@ -46,15 +46,26 @@ interface GridProps {
   highlightedZ?: number;
   /** Disable click interactions — useful in passive lesson view. */
   passive?: boolean;
+  /** Optional override for each cell's accent color. Returning null falls back
+   * to the category color. Used by trend heat maps. */
+  colorOverride?: (el: PeriodicElement) => string | null;
+  /** Optional override for the per-cell title/tooltip. */
+  titleFor?: (el: PeriodicElement) => string;
 }
 
 /** The element grid itself, no page chrome. Reusable in lessons. */
-export function PeriodicTableGrid({ onPick, highlightedZ, passive }: GridProps) {
+export function PeriodicTableGrid({
+  onPick,
+  highlightedZ,
+  passive,
+  colorOverride,
+  titleFor,
+}: GridProps) {
   return (
     <div className="periodic-table">
       {ELEMENTS_DATA.map((el) => {
         const key = categoryKey(el.category);
-        const color = CATEGORY_COLORS[key];
+        const color = colorOverride?.(el) ?? CATEGORY_COLORS[key];
         const isHighlighted = highlightedZ === el.number;
         return (
           <button
@@ -67,7 +78,7 @@ export function PeriodicTableGrid({ onPick, highlightedZ, passive }: GridProps) 
             }}
             onClick={() => !passive && onPick?.(el)}
             tabIndex={passive ? -1 : 0}
-            title={`${el.name} · ${el.category}`}
+            title={titleFor ? titleFor(el) : `${el.name} · ${el.category}`}
           >
             <div className="pt-num">{el.number}</div>
             <div className="pt-sym">{el.symbol}</div>
