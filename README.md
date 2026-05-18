@@ -2,6 +2,8 @@
 
 **An interactive organic chemistry learning platform — structured pedagogy meets open-ended molecular exploration.**
 
+Live at [orbo-smoky.vercel.app](https://orbo-smoky.vercel.app), deployed with Vercel.
+
 Orbo is built on the conviction that chemistry is best learned by doing. Rather than static diagrams or isolated simulations, it combines a curriculum layer with a hands-on 3D molecule builder, so students can move fluidly between guided instruction and free experimentation.
 
 ## What it does
