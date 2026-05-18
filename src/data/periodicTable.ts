@@ -32,10 +32,6 @@ export interface PeriodicElement {
   source: string;
   summary: string;
   "cpk-hex": string | null;
-  bohr_model_image: string | null;
-  bohr_model_3d: string | null;
-  spectral_img: string | null;
-  image: { title: string; url: string; attribution: string } | null;
 }
 
 export const ELEMENTS_DATA: PeriodicElement[] = (raw as { elements: PeriodicElement[] }).elements;
