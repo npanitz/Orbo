@@ -17,7 +17,8 @@ Learning Modules (index)
   │     ├── Lesson 3: Periodic Trends
   │     └── Reference: Periodic Table
   └── Module 2: Covalent Bonding & VSEPR Geometry
-        └── Lesson 1: Why Atoms Bond     [Lessons 2–4 stubbed]
+        ├── Lesson 1: Why Atoms Bond
+        └── Lesson 2: Lewis Structures   [Lessons 3–4 stubbed]
 ```
 
 ## File layout
@@ -51,8 +52,15 @@ src/learn/
     WhyAtomsBond/
       WhyAtomsBondLesson.tsx     Phase runner
       EnergyExplorer.tsx         Atom pair + slider + Morse-curve energy graph
-      morsePotential.ts          Math util (Morse curve sampling)
+      morsePotential.ts          Math util (potential energy sampling)
       pairs.ts                   Pair definitions (H-H, He-He, Cl-Cl, Na-Cl)
+      quizQuestions.ts           MCQ data
+    LewisStructures/
+      LewisStructuresLesson.tsx  Phase runner
+      AlgorithmWalkthrough.tsx   Molecule picker + canvas + step list + counter
+      LewisCanvas.tsx            SVG renderer (atoms + bonds + lone-pair dots)
+      molecules.ts               Pre-scripted molecules (H₂O, NH₃, CO₂) with steps
+      state.ts                   LewisState type + applyStep reducer
       quizQuestions.ts           MCQ data
 ```
 
@@ -200,9 +208,21 @@ It appears in the `TrendExplorer` toggle and in the `PeriodicTableModal`'s consu
 ### Module 2, Lesson 1: Why Atoms Bond (`WhyAtomsBond/`)
 
 - **Phases:** intro → free-form explore → 5-question quiz → wrap
-- **Interactive:** `EnergyExplorer` — pair toggle (H-H / He-He / Cl-Cl / Na-Cl), atom scene with draggable distance slider, Morse-potential energy graph below with live position marker, narrative panel
-- **Key mechanic:** the He-He curve is *deliberately flat* (D ≈ 0) — this is the pedagogical centerpiece, showing visually why noble gases don't bond
+- **Interactive:** `EnergyExplorer` — pair toggle (H-H / He-He / Cl-Cl / Na-Cl), atom scene with draggable distance slider, energy graph below with live position marker, narrative panel
+- **Two potential shapes:** Morse for bonded pairs (well + repulsion), exponential for He-He (Pauli wall, no well). Picking pure-Morse with D≈0 wouldn't model the Pauli wall correctly.
+- **⚡ Relax button:** gradient-descent animation that moves the marker along the slope until the force vanishes. He-He settles past the wall in the flat region — the pedagogical "no bond" lesson made literal.
 - **Quiz:** predict-bonding questions plus a synthesis question on what an energy curve tells you (presence of a well, well depth, well position)
+
+### Module 2, Lesson 2: Lewis Structures (`LewisStructures/`)
+
+- **Phases:** intro → walkthrough (free-form) → **pick-the-right-structure practice** → 5-question quiz → wrap
+- **Walkthrough — `AlgorithmWalkthrough`:** molecule picker (H₂O / NH₃ / CO₂ / CH₄ / HCN / N₂), SVG `LewisCanvas` showing partial structure, scrollable step list with current step highlighted, electron counter (counted / used / remaining / total), Prev/Next/Reset controls
+- **State pattern:** each molecule has an ordered `Step[]`. `stateAtStep(molecule, N)` folds the first N steps over an initial empty state via `applyStep`. The canvas is a pure function of state. Easy to add more molecules later — just script the steps.
+- **Practice phase — `PickTheStructure`:** between walkthrough and quiz, a sequence of "which is the correct Lewis structure?" questions. Each question shows 3-4 candidate structures (rendered via `LewisCanvas` from candidate state) — one correct, others with characteristic errors. Each wrong-answer explanation diagnoses the specific algorithm step that was skipped or done wrong.
+- **Practice data shape:** `PracticeQuestion → PracticeCandidate[]`. A candidate is just `{ lonePairs: Record<atomId, count>, bondOrders: number[], correct, explanation }`. Renderer builds a synthetic `LewisState` via `stateFromCandidate`. Reuses existing molecule definitions.
+- **Pedagogical centerpiece:** CO₂'s bond-promotion steps. After distributing all 16 electrons as lone pairs, carbon is short of an octet. The algorithm explicitly *re-allocates* a lone pair from each oxygen into a double bond. Students watch the lone-pair dots disappear and a second bond line appear in its place.
+- **Quiz:** counts (CO₂ has 16 valence e⁻), structural rules (central atom = least electronegative non-H), interpretation (how many LPs on water's O?), diagnostic (which step was skipped?), and synthesis (when do you need to promote a bond?)
+- **Deferred to "Lab mode" later:** draw-your-own Lewis structures (drag/click to place electrons, validation). Genuinely good idea, multi-day build because of UX + validation edge cases. Pick-the-right-structure covers the same pedagogy with lower cost.
 
 ## How to add a new lesson
 

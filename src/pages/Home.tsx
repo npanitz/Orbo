@@ -38,7 +38,7 @@ export function Home({ onPick }: Props) {
   return (
     <div className="home">
       <header className="home-header">
-        <h1 className="home-title">Orbo</h1>
+        <h1 className="home-title">OrBo</h1>
         <p className="home-tagline">A chemistry playground for the curious.</p>
       </header>
       <div className="home-menu">

@@ -1,19 +1,18 @@
 import { useState } from "react";
 import { AtomicStructureModule } from "../learn/modules/AtomicStructureModule";
+import { BondingModule } from "../learn/modules/BondingModule";
 
 interface Props {
   onExit: () => void;
 }
 
-type Track =
-  | "index"
-  | "atomic-structure";
+type Track = "index" | "atomic-structure" | "bonding";
 
 interface TrackDef {
   id: Track;
   title: string;
   blurb: string;
-  status: "available" | "coming-soon";
+  status: "available";
 }
 
 const TRACKS: TrackDef[] = [
@@ -24,17 +23,16 @@ const TRACKS: TrackDef[] = [
       "Meet the elements. Build atoms from scratch and learn how their structure determines where they live on the chart.",
     status: "available",
   },
+  {
+    id: "bonding",
+    title: "Covalent Bonding & VSEPR Geometry",
+    blurb:
+      "Why atoms bond, how electrons get shared or transferred, and the 3D shapes that result.",
+    status: "available",
+  },
 ];
 
 const SOON: { title: string; blurb: string }[] = [
-  {
-    title: "Covalent Bonding & VSEPR Geometry",
-    blurb: "Why molecules take the shapes they do.",
-  },
-  {
-    title: "Lewis Structures & Resonance",
-    blurb: "Drawing electrons where they actually are.",
-  },
   {
     title: "Functional Groups in Organic Chemistry",
     blurb: "The reactive vocabulary of carbon.",
@@ -50,6 +48,9 @@ export function LearningModules({ onExit }: Props) {
 
   if (track === "atomic-structure") {
     return <AtomicStructureModule onExit={() => setTrack("index")} />;
+  }
+  if (track === "bonding") {
+    return <BondingModule onExit={() => setTrack("index")} />;
   }
 
   return (

@@ -549,6 +549,18 @@ canvas { display: block; }
   gap: 32px;
   margin-bottom: 24px;
 }
+/* Quiz phases (headers that contain a quiz-title-row) are centered on the
+   page to match the centered MCQ card beneath them. */
+.lesson-phase-header:has(.quiz-title-row) {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-content: center;
+  text-align: center;
+}
+.lesson-phase-header:has(.quiz-title-row) .quiz-title-row {
+  justify-content: center;
+}
 .lesson-phase-header h2 {
   margin: 0 0 6px;
   font-size: 24px;
@@ -927,6 +939,7 @@ canvas { display: block; }
   border-radius: 14px;
   padding: 22px 26px 18px;
   max-width: 720px;
+  margin: 0 auto;
 }
 .mcq-prompt {
   font-size: 17px;
@@ -1230,6 +1243,388 @@ canvas { display: block; }
   margin-top: 10px;
   font-size: 11px;
   color: rgba(180, 200, 235, 0.75);
+}
+
+/* ---------- Why Atoms Bond (module 2, lesson 1) ---------- */
+
+.bond-explorer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.bond-toggle {
+  display: flex;
+  gap: 8px;
+  background: rgba(15, 18, 32, 0.55);
+  border: 1px solid rgba(115, 153, 255, 0.22);
+  border-radius: 12px;
+  padding: 6px;
+}
+.bond-scene-wrap {
+  background: rgba(15, 18, 32, 0.55);
+  border: 1px solid rgba(115, 153, 255, 0.22);
+  border-radius: 14px;
+  padding: 14px 18px 12px;
+}
+.bond-scene-svg {
+  width: 100%;
+  height: 140px;
+  display: block;
+}
+.bond-slider-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 6px;
+}
+.bond-slider {
+  flex: 1;
+  accent-color: #a4b8ff;
+}
+.bond-slider:disabled { opacity: 0.7; }
+
+.bond-relax-button {
+  background: rgba(255, 130, 80, 0.18);
+  border: 1px solid rgba(255, 130, 80, 0.55);
+  color: #ffd8c2;
+  font: inherit;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.03em;
+  padding: 8px 16px;
+  border-radius: 10px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.12s, border-color 0.12s;
+}
+.bond-relax-button:hover {
+  background: rgba(255, 130, 80, 0.32);
+  border-color: rgba(255, 170, 130, 0.85);
+  color: #fff;
+}
+.bond-relax-button.active {
+  background: rgba(255, 130, 80, 0.45);
+  border-color: rgba(255, 200, 160, 1);
+  color: #fff;
+}
+
+.bond-relax-status {
+  margin-top: 6px;
+  font-size: 12px;
+  color: rgba(255, 200, 160, 0.85);
+  font-style: italic;
+}
+.bond-slider-labels {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  color: rgba(180, 200, 235, 0.65);
+  margin-top: 2px;
+}
+.bond-distance {
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  font-size: 12px;
+  color: #e6f2ff;
+  letter-spacing: 0.03em;
+}
+
+.bond-bottom {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+.bond-graph-svg {
+  width: 100%;
+  height: 280px;
+  background: rgba(15, 18, 32, 0.55);
+  border: 1px solid rgba(115, 153, 255, 0.22);
+  border-radius: 14px;
+  padding: 4px;
+  display: block;
+}
+.bond-narrative {
+  background: rgba(15, 18, 32, 0.55);
+  border: 1px solid rgba(115, 153, 255, 0.22);
+  border-radius: 14px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.bond-action {
+  text-align: center;
+  padding-top: 4px;
+}
+
+@media (max-width: 1100px) {
+  .bond-bottom { grid-template-columns: 1fr; }
+}
+
+/* ---------- Lewis Structures (module 2, lesson 2) ---------- */
+
+.lewis-walkthrough {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.lewis-mol-picker {
+  display: flex;
+  gap: 8px;
+  background: rgba(15, 18, 32, 0.55);
+  border: 1px solid rgba(115, 153, 255, 0.22);
+  border-radius: 12px;
+  padding: 6px;
+  flex-wrap: wrap;
+}
+
+.lewis-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 18px;
+  align-items: stretch;
+}
+
+.lewis-stage {
+  background: rgba(15, 18, 32, 0.55);
+  border: 1px solid rgba(115, 153, 255, 0.22);
+  border-radius: 14px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.lewis-structure-svg {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 440 / 320;
+  display: block;
+}
+.lp-dots {
+  transition: opacity 0.18s ease;
+}
+
+.lewis-counter {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+.lewis-counter-item {
+  background: rgba(8, 10, 22, 0.5);
+  border: 1px solid rgba(115, 153, 255, 0.2);
+  border-radius: 10px;
+  padding: 8px 6px;
+  text-align: center;
+}
+.lewis-counter-item.muted { opacity: 0.6; }
+.lewis-counter-item.warn {
+  border-color: rgba(255, 154, 162, 0.6);
+  background: rgba(255, 154, 162, 0.08);
+}
+.lewis-counter-label {
+  font-size: 9px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: rgba(180, 200, 235, 0.55);
+  margin-bottom: 4px;
+}
+.lewis-counter-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: #e6f2ff;
+  font-family: ui-monospace, "SF Mono", Menlo, monospace;
+  line-height: 1;
+}
+
+.lewis-steps {
+  background: rgba(15, 18, 32, 0.55);
+  border: 1px solid rgba(115, 153, 255, 0.22);
+  border-radius: 14px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.lewis-teaching {
+  border-left: 2px solid rgba(115, 153, 255, 0.5);
+  padding-left: 12px;
+}
+.lewis-teaching p {
+  margin: 4px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(216, 236, 255, 0.85);
+}
+
+.lewis-step-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow-y: auto;
+  max-height: 360px;
+  padding-right: 4px;
+}
+.lewis-step {
+  display: flex;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: rgba(8, 10, 22, 0.4);
+  border: 1px solid rgba(115, 153, 255, 0.12);
+  opacity: 0.45;
+  transition: opacity 0.15s, background 0.15s, border-color 0.15s;
+}
+.lewis-step.past {
+  opacity: 0.7;
+}
+.lewis-step.current {
+  opacity: 1;
+  background: rgba(115, 153, 255, 0.18);
+  border-color: rgba(160, 200, 255, 0.7);
+}
+.lewis-step-num {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 12px;
+  background: rgba(115, 153, 255, 0.2);
+  color: #e6f2ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+}
+.lewis-step.past .lewis-step-num {
+  background: rgba(110, 224, 200, 0.3);
+  color: #b6f3df;
+}
+.lewis-step.current .lewis-step-num {
+  background: #a4b8ff;
+  color: #1a2030;
+}
+.lewis-step-body {
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(216, 236, 255, 0.9);
+}
+
+.lewis-controls {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.lewis-controls button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+@media (max-width: 1100px) {
+  .lewis-main { grid-template-columns: 1fr; }
+}
+
+/* ---------- Pick-the-right-structure practice phase ---------- */
+
+.practice-card {
+  background: rgba(15, 18, 32, 0.55);
+  border: 1px solid rgba(115, 153, 255, 0.22);
+  border-radius: 14px;
+  padding: 22px 24px 18px;
+  max-width: 920px;
+  margin: 0 auto;
+}
+.practice-prompt {
+  font-size: 16px;
+  color: #e6f2ff;
+  line-height: 1.5;
+  margin-bottom: 18px;
+  text-align: center;
+}
+.practice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+.practice-option {
+  position: relative;
+  background: rgba(8, 10, 22, 0.5);
+  border: 1px solid rgba(115, 153, 255, 0.22);
+  color: inherit;
+  font: inherit;
+  border-radius: 12px;
+  padding: 10px 12px 28px;
+  cursor: pointer;
+  transition: background 0.12s, border-color 0.12s, opacity 0.12s;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+}
+.practice-option:hover:not(:disabled) {
+  background: rgba(115, 153, 255, 0.12);
+  border-color: rgba(160, 200, 255, 0.55);
+}
+.practice-option-letter {
+  position: absolute;
+  top: 8px;
+  left: 12px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(180, 200, 235, 0.7);
+  font-weight: 700;
+}
+.practice-option-canvas {
+  display: block;
+  width: 100%;
+  aspect-ratio: 440 / 320;
+  background: rgba(8, 10, 22, 0.4);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.practice-option-canvas svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.practice-option-badge {
+  position: absolute;
+  bottom: 8px;
+  left: 12px;
+  right: 12px;
+  text-align: center;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  min-height: 14px;
+}
+.practice-option-correct {
+  background: rgba(110, 224, 200, 0.15);
+  border-color: rgba(110, 224, 200, 0.65);
+}
+.practice-option-correct .practice-option-badge { color: #b6f3df; }
+.practice-option-incorrect {
+  background: rgba(255, 154, 162, 0.12);
+  border-color: rgba(255, 154, 162, 0.55);
+}
+.practice-option-incorrect .practice-option-badge { color: #ffb1b8; }
+.practice-option-reveal-correct {
+  border-color: rgba(110, 224, 200, 0.55);
+}
+.practice-option-reveal-correct .practice-option-badge { color: rgba(182, 243, 223, 0.85); }
+.practice-option-dim {
+  opacity: 0.45;
+}
+
+.practice-explanation {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  font-size: 13px;
+  line-height: 1.55;
 }
 
 @media (max-width: 1100px) {
